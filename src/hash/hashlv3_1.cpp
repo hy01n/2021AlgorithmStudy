@@ -12,6 +12,8 @@ bool cmp(const pair<string,int>& a,const pair<string,int>& b)
 
 vector<int> solution(vector<string> genres, vector<int> plays) {
     vector<int> answer;
+	vector<int> value;
+	vector<int> answervalue;
     vector<string> Sgenres(genres);
     multimap <string,int> hashmap;
     map <string,int> shashmap;
@@ -32,11 +34,25 @@ vector<int> solution(vector<string> genres, vector<int> plays) {
         }
         shashmap[Sgenres[i]]=sum;
     }
-    vector<pair<string,int>> vec(shashmap.begin(), shashmap.end());//pop 3100 classic 1450
+    vector<pair<string,int>> vec(shashmap.begin(), shashmap.end());
     sort(vec.begin(),vec.end(),cmp);
-    for(int i=0;i<2;i++)
+    for(int i=0;i<Sgenres.size();i++)
     {
+        int count=0;
+        for(iter=hashmap.lower_bound(vec[i]->first);iter!=hashmap.upper_bound(vec[i]->first);iter++)
+        {
+           if(count==2)
+		   {
+			   break;
+		   }
+			answervalue.push_back(iter->second);
+			count++;
+        }
         
     }
+	for(int i=0;i<answervalue.size();i++)
+	{
+		answer.push_back(find(answervalue.begin(),answervalue.end(),answervalue[i]));
+	}
     return answer;
 }
